@@ -1,0 +1,23 @@
+﻿.swagger-ui .topbar {
+    background-color: #664228;
+}
+
+.swagger-ui .topbar .download-url-wrapper .select-label select {
+    border-color: #5C5E53;
+}
+
+.topbar-wrapper img[alt="Swagger UI"], .topbar-wrapper span {
+    visibility: collapse;
+}
+
+.topbar-wrapper .link:before {
+    content: url('https://www.eventbooking.com/wp-content/uploads/2016/05/event-booking-logo.png');
+}
+
+.swagger-ui .info .title small:last-child {
+    visibility: hidden;
+}
+
+.swagger-ui .info .title small:first-child {
+    visibility: hidden;
+}

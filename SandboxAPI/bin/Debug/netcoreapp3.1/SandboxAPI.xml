@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SandboxAPI</name>
+    </assembly>
+    <members>
+        <member name="M:SandboxAPI.Controllers.CognitoController.SignIn(System.String,System.String)">
+            <summary>
+            Initiates authentication with AWS Cognito
+            </summary>
+            <returns>Refresh, access, and id tokens for the authenticated user</returns>
+            <response code="200">User signed in successfully.</response>
+            <response code="404">User cannot sign in</response>
+            <response code="500">Server cannot process your request.</response>
+        </member>
+        <member name="M:SandboxAPI.Controllers.MovieController.Get(System.String)">
+            <summary>
+            Returns a movie.
+            </summary>
+            <returns>Movie given the passed in name</returns>
+            <response code="200">Movie found</response>
+            <response code="404">Movie is not found</response>
+            <response code="500">Oopsie whoopsie! The code monkeys can't get your movie right now</response>
+        </member>
+        <member name="M:SandboxAPI.Controllers.MovieController.Create(SandboxAPI.Models.Movie)">
+            <summary>
+            Creates a new movie if it doesn't already exist.
+            </summary>
+            <response code="200">Movie created</response>
+            <response code="400">Movie could not be added</response>
+            <response code="500">Can't create your movie right now</response>
+        </member>
+        <member name="M:SandboxAPI.Controllers.MovieController.GetAll">
+            <summary>
+            Returns all movies in the database
+            </summary>
+            <response code="200">Movies returned</response>
+            <response code="400">Movies could not be returned</response>
+            <response code="500">Can't return all movies right now</response>
+        </member>
+        <member name="P:SandboxAPI.Models.Movie.Name">
+            <summary>
+            Name of the movie.
+            </summary>
+            <example>Inception</example>
+        </member>
+        <member name="P:SandboxAPI.Models.Movie.Director">
+            <summary>
+            Director of the movie. For movies with multiple, this will be comma delimited
+            </summary>
+        </member>
+        <member name="P:SandboxAPI.Models.Movie.Genre">
+            <summary>
+            Genres of the movie.
+            </summary>
+        </member>
+        <member name="P:SandboxAPI.Models.Movie.Rating">
+            <summary>
+            Personal rating of the movie (1-5)
+            </summary>
+        </member>
+    </members>
+</doc>
