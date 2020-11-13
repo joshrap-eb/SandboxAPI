@@ -34,7 +34,8 @@ namespace SandboxAPI.Controllers
 		[ProducesResponseType( 400 )]
 		[ProducesResponseType( 500 )]
 		[HttpGet( "{movieName}" )]
-		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+		[ApiVersion( "2.2" )]
+		[Authorize( AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme )]
 		public ActionResult<Movie> Get( string movieName )
 		{
 			if ( string.IsNullOrWhiteSpace( movieName ) )

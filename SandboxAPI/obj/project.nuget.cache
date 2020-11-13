@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oINXHrUJzcV5R/bX80p97dsFyZBPgKobsWuyxNK66ySAQjRXrsru6XUXxpy/G/d7UGQRU5JF3TEFKHOmynuZHw==",
+  "dgSpecHash": "ztyTbFh5m4l4CimroW3hYdshVdPlL2/x6SGzzVR2UNfmfHaAoCv0e7dp6ljKJtRU6sHOilD0u/7cxqp8GpFT5g==",
   "success": true,
   "projectFilePath": "C:\\Users\\joshua.rapoport\\Documents\\git\\SandboxAPI\\SandboxAPI\\SandboxAPI.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\joshua.rapoport\\.nuget\\packages\\awssdk.securitytoken\\3.5.0.2\\awssdk.securitytoken.3.5.0.2.nupkg.sha512",
     "C:\\Users\\joshua.rapoport\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.10\\microsoft.aspnetcore.authentication.jwtbearer.3.1.10.nupkg.sha512",
     "C:\\Users\\joshua.rapoport\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\4.2.0\\microsoft.aspnetcore.mvc.versioning.4.2.0.nupkg.sha512",
+    "C:\\Users\\joshua.rapoport\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning.apiexplorer\\4.2.0\\microsoft.aspnetcore.mvc.versioning.apiexplorer.4.2.0.nupkg.sha512",
     "C:\\Users\\joshua.rapoport\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
     "C:\\Users\\joshua.rapoport\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\joshua.rapoport\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\5.5.0\\microsoft.identitymodel.jsonwebtokens.5.5.0.nupkg.sha512",
