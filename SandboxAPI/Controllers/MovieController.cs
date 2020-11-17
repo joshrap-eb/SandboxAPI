@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SandboxAPI.Models;
@@ -14,13 +13,15 @@ namespace SandboxAPI.Controllers
 	public class MovieController
 	{
 		private readonly ILogger<MovieController> _logger;
-
+		private readonly IHttpContextAccessor _context;
 		private readonly IMovieService _movieService;
 
-		public MovieController( ILogger<MovieController> logger, IMovieService movieService )
+		public MovieController( ILogger<MovieController> logger, IMovieService movieService,
+			IHttpContextAccessor httpContextAccessor )
 		{
 			_movieService = movieService;
 			_logger = logger;
+			_context = httpContextAccessor;
 		}
 
 		/// <summary>
@@ -34,10 +35,11 @@ namespace SandboxAPI.Controllers
 		[ProducesResponseType( 400 )]
 		[ProducesResponseType( 500 )]
 		[HttpGet( "{movieName}" )]
-		[ApiVersion( "2.2" )]
-		[Authorize( AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme )]
 		public ActionResult<Movie> Get( string movieName )
 		{
+			var token = _context.HttpContext.Request
+				.Headers["HeaderAuthorization"]; // todo use this for authorization purposes?
+
 			if ( string.IsNullOrWhiteSpace( movieName ) )
 			{
 				return new BadRequestObjectResult( "Movie name cannot be empty." );
@@ -46,9 +48,10 @@ namespace SandboxAPI.Controllers
 			var movie = _movieService.Get( movieName );
 			if ( movie == null )
 			{
-				return new NotFoundResult( );
+				return new NotFoundObjectResult( "Movie Not Found" );
 			}
 
+			movie.Director = token.ToString( ); // just because too lazy to configure logs rn
 			return movie;
 		}
 

@@ -42,6 +42,7 @@ namespace SandboxAPI
 
 			services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).AddJwtBearer( options =>
 			{
+				// not actually doing anything btw
 				options.TokenValidationParameters = new TokenValidationParameters
 				{
 					IssuerSigningKeyResolver = ( s, securityToken, identifier, parameters ) =>
@@ -62,6 +63,7 @@ namespace SandboxAPI
 					ValidateAudience = true
 				};
 			} );
+			services.AddHttpContextAccessor();
 
 			services.AddRouting( options => options.LowercaseUrls = true );
 			services.AddMvc( );
