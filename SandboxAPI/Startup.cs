@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using SandboxAPI.Configuration;
 using SandboxAPI.Filters;
+using SandboxAPI.Middleware;
 using SandboxAPI.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -40,30 +41,35 @@ namespace SandboxAPI
 				o.DefaultApiVersion = new ApiVersion( 1, 0 );
 			} );
 
-			services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme ).AddJwtBearer( options =>
-			{
-				// not actually doing anything btw
-				options.TokenValidationParameters = new TokenValidationParameters
+			services.AddAuthentication( options =>
 				{
-					IssuerSigningKeyResolver = ( s, securityToken, identifier, parameters ) =>
+					options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+					options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+				} )
+				.AddJwtBearer( token =>
+				{
+					token.TokenValidationParameters = new TokenValidationParameters
 					{
-						// get JsonWebKeySet from AWS
-						var json = new WebClient( ).DownloadString( parameters.ValidIssuer + "/.well-known/jwks.json" );
-						// serialize the result
-						var keys = JsonConvert.DeserializeObject<JsonWebKeySet>( json ).Keys;
-						// cast the result to be the type expected by IssuerSigningKeyResolver
-						return ( IEnumerable<SecurityKey> ) keys;
-					},
-
-					ValidIssuer = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_BTDPXcMc7",
-					ValidateIssuerSigningKey = true,
-					ValidateIssuer = true,
-					ValidateLifetime = true,
-					ValidAudience = "1ukd4ljadtnubo0nc5bfui3b07",
-					ValidateAudience = true
-				};
-			} );
-			services.AddHttpContextAccessor();
+						IssuerSigningKeyResolver = ( s, securityToken, identifier, parameters ) =>
+						{
+							// get JsonWebKeySet from AWS
+							var json = new WebClient( ).DownloadString( parameters.ValidIssuer +
+							                                            "/.well-known/jwks.json" );
+							// serialize the result
+							var keys = JsonConvert.DeserializeObject<JsonWebKeySet>( json ).Keys;
+							// cast the result to be the type expected by IssuerSigningKeyResolver
+							return ( IEnumerable<SecurityKey> ) keys;
+						},
+				
+						ValidIssuer = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_cc7HM6r2a",
+						ValidateIssuerSigningKey = false,
+						ValidateIssuer = false,
+						ValidateLifetime = false,
+						ValidateAudience = false
+					};
+				} )
+				;
+			services.AddHttpContextAccessor( );
 
 			services.AddRouting( options => options.LowercaseUrls = true );
 			services.AddMvc( );
@@ -112,7 +118,7 @@ namespace SandboxAPI
 			{
 				options.DocumentTitle = "Sandbox API";
 				options.RoutePrefix = "docs"; // hosted at /docs/.../ instead of /swagger/.../
-			
+
 				options.InjectStylesheet( "/swagger-ui/custom.css" );
 				foreach ( var description in apiVersionDescriptionProvider.ApiVersionDescriptions )
 				{
@@ -122,9 +128,8 @@ namespace SandboxAPI
 			} );
 
 			app.UseAuthentication( );
-
+			app.UseMiddleware<AuthorizationMiddleware>( );
 			app.UseAuthorization( );
-
 			app.UseEndpoints( endpoints => { endpoints.MapControllers( ); } );
 		}
 	}

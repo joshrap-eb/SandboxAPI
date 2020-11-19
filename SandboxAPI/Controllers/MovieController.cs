@@ -10,7 +10,7 @@ namespace SandboxAPI.Controllers
 	[ApiController]
 	[ApiVersion( "1" )]
 	[Route( "api/v{version:apiVersion}/[controller]" )]
-	public class MovieController
+	public class MovieController : ApiBaseController
 	{
 		private readonly ILogger<MovieController> _logger;
 		private readonly IHttpContextAccessor _context;
@@ -37,9 +37,6 @@ namespace SandboxAPI.Controllers
 		[HttpGet( "{movieName}" )]
 		public ActionResult<Movie> Get( string movieName )
 		{
-			var token = _context.HttpContext.Request
-				.Headers["HeaderAuthorization"]; // todo use this for authorization purposes?
-
 			if ( string.IsNullOrWhiteSpace( movieName ) )
 			{
 				return new BadRequestObjectResult( "Movie name cannot be empty." );
@@ -51,7 +48,12 @@ namespace SandboxAPI.Controllers
 				return new NotFoundObjectResult( "Movie Not Found" );
 			}
 
-			movie.Director = token.ToString( ); // just because too lazy to configure logs rn
+			// for debugging purposes only
+			if ( AuthParamModel != null )
+			{
+				movie.Director = AuthParamModel.ClientId;
+			}
+
 			return movie;
 		}
 
